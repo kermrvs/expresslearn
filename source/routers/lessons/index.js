@@ -1,11 +1,10 @@
 import express from 'express';
-import { lessonsItems } from './data';
 import { getObByHash } from '../getObByHash';
 import uuid4 from 'uuid4';
 
 export const lessonsRoutes = express.Router();
 
-let lessons = lessonsItems;
+let lessons = [];
 
 lessonsRoutes.get('/', (req, res) => {
   try {
@@ -23,7 +22,7 @@ lessonsRoutes.post('/', (req, res) => {
     lesson.modified = date;
     lesson.hash = uuid4();
     lessons.push(lesson);
-    res.status(200).json({ message: 'Lesson have been created!!!' });
+    res.status(201).json(lesson.hash);
   } catch (e) {
     res.status(500).json({ message: 'some server error' });
   }
@@ -90,7 +89,7 @@ lessonsRoutes.delete('/:lessonHash', (req, res) => {
       res.status(400).json({ message: 'incorrect payload' });
     } else {
       lessons = newLesson;
-      res.status(200).json(lessons);
+      res.status(204);
     }
   } catch (e) {
     res.status(500).json({ message: 'some server error' });

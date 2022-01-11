@@ -1,11 +1,10 @@
 import express from 'express';
-import { usersData } from './data';
 import { getObByHash } from '../getObByHash';
 import uuid4 from 'uuid4';
 
 export const userRoutes = express.Router();
 
-let users = usersData;
+let users = [];
 
 userRoutes.get('/', (req, res) => {
   try {
@@ -29,7 +28,7 @@ userRoutes.post('/', (req, res) => {
       user.updated = date;
       user.hash = uuid4();
       users.push(user);
-      res.status(200).json({ message: 'User have been created!!!' });
+      res.status(201).json(user.hash);
     }
   } catch (e) {
     res.status(500).json({ message: 'some server error' });
@@ -69,7 +68,7 @@ userRoutes.put('/:userHash', (req, res) => {
           user = value;
         }
       });
-      res.status(200).json(user);
+      res.status(200).json(user.hash);
     } else {
       res.status(400).json({ message: 'incorrect payload' });
     }
@@ -89,7 +88,7 @@ userRoutes.delete('/:userHash', (req, res) => {
       res.status(400).json({ message: 'incorrect payload' });
     } else {
       users = newUsers;
-      res.status(200).json(users);
+      res.status(204);
     }
   } catch (e) {
     res.status(500).json({ message: 'some server error' });

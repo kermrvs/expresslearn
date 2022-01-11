@@ -1,11 +1,10 @@
 import express from 'express';
-import { classesArray } from './data';
 import { getObByHash } from '../getObByHash';
 import uuid4 from 'uuid4';
 
 export const classRoutes = express.Router();
 
-let classes = classesArray;
+let classes = [];
 
 classRoutes.get('/', (req, res) => {
   try {
@@ -29,7 +28,7 @@ classRoutes.post('/', (req, res) => {
       createdClass.updated = date;
       createdClass.hash = uuid4();
       classes.push(createdClass);
-      res.status(200).json({ message: 'Class have been created!!!' });
+      res.status(201).json(createdClass.hash);
     }
   } catch (e) {
     res.status(500).json({ message: 'some server error' });
@@ -67,8 +66,10 @@ classRoutes.put('/:classHash', (req, res) => {
           classObj = value;
         }
       });
+      res.status(200).json(classObj.hash);
+    } else {
+      res.status(200).json({ message: 'incorrect payload' });
     }
-    res.status(200).json(classObj);
   } catch (e) {
     res.status(500).json({ message: 'some server error' });
   }
@@ -84,7 +85,7 @@ classRoutes.delete('/:classHash', (req, res) => {
       res.status(400).json({ message: 'incorrect payload' });
     } else {
       classes = newClass;
-      res.status(200).json(classes);
+      res.status(204);
     }
   } catch (e) {
     res.status(500).json({ message: 'some server error' });

@@ -27,7 +27,7 @@ educationRoutes.post('/classes/:classHash/enroll', (req, res) => {
             value.students.push({ user: findUser, status, notes });
           }
         });
-        res.sendStatus(200);
+        res.sendStatus(204);
       }
     }
   } catch (e) {
@@ -41,11 +41,11 @@ educationRoutes.post('/classes/:classHash/expel', (req, res) => {
     const { user } = req.body;
     const findClass = getObByHash(classHash, classes);
     if (findClass === null) {
-      res.status(400).json({ message: 'class not found' });
+      res.status(400).json({ message: 'incorrect payload' });
     } else {
       const findUser = getObByHash(user, users);
       if (findUser === null) {
-        res.status(400).json({ message: 'user not found' });
+        res.status(400).json({ message: 'incorrect payload' });
       } else {
         const currentStudents = findClass.students.filter(value => {
           const { user } = value;
@@ -56,7 +56,7 @@ educationRoutes.post('/classes/:classHash/expel', (req, res) => {
             value.students = currentStudents;
           }
         });
-        res.sendStatus(200);
+        res.sendStatus(204);
       }
     }
   } catch (e) {
@@ -70,7 +70,7 @@ educationRoutes.post('/lessons/:lessonHash/videos', (req, res) => {
     const reqBody = req.body;
     const findLesson = getObByHash(lessonHash, lessonsItems);
     if (findLesson === null) {
-      res.status(400).json({ message: 'lesson not fount' });
+      res.status(400).json({ message: 'incorrect payload' });
     } else {
       lessonsItems.forEach(value => {
         if (value.hash === lessonHash) {
@@ -78,7 +78,7 @@ educationRoutes.post('/lessons/:lessonHash/videos', (req, res) => {
           value.content.videos.push(reqBody);
         }
       });
-      res.sendStatus(200);
+      res.sendStatus(204);
     }
   } catch (e) {
     res.status(500).json({ message: 'some server error' });
@@ -91,7 +91,7 @@ educationRoutes.post('/lessons/:lessonHash/keynotes', (req, res) => {
     const reqBody = req.body;
     const findLesson = getObByHash(lessonHash, lessonsItems);
     if (findLesson === null) {
-      res.status(400).json({ message: 'lesson not fount' });
+      res.status(400).json({ message: 'incorrect payload' });
     } else {
       lessonsItems.forEach(value => {
         if (value.hash === lessonHash) {
@@ -99,7 +99,7 @@ educationRoutes.post('/lessons/:lessonHash/keynotes', (req, res) => {
           value.content.keynotes.push(reqBody);
         }
       });
-      res.sendStatus(200);
+      res.sendStatus(204);
     }
   } catch (e) {
     res.status(500).json({ message: 'some server error' });
@@ -116,9 +116,9 @@ educationRoutes.get('/lessons/:lessonHash/videos/:videoHash', (req, res) => {
       const { content } = findLesson;
       const findVideo = getObByHash(videoHash, content.videos);
       if (findVideo === null) {
-        res.status(400).json({ message: 'video not fount' });
+        res.status(400).json({ message: 'incorrect payload' });
       } else {
-        res.status(200).json(findVideo.uri);
+        res.status(200);
       }
     }
   } catch (e) {
@@ -131,17 +131,17 @@ educationRoutes.delete('/lessons/:lessonHash/videos/:videoHash', (req, res) => {
     const { lessonHash, videoHash } = req.params;
     const findLesson = getObByHash(lessonHash, lessonsItems);
     if (findLesson === null) {
-      res.status(400).json({ message: 'lesson not fount' });
+      res.status(400).json({ message: 'incorrect payload' });
     } else {
       const { content } = findLesson;
       const findVideo = getObByHash(videoHash, content.videos);
       if (findVideo === null) {
-        res.status(400).json({ message: 'video not fount' });
+        res.status(400).json({ message: 'incorrect payload' });
       } else {
         content.videos = content.videos.filter(value => {
           return value.hash !== findVideo.hash;
         });
-        res.status(200).json(content.videos);
+        res.status(204);
       }
     }
   } catch (e) {
@@ -159,9 +159,9 @@ educationRoutes.get('/lessons/:lessonHash/keynote/:keynoteHash', (req, res) => {
       const { content } = findLesson;
       const findVideo = getObByHash(keynoteHash, content.keynotes);
       if (findVideo === null) {
-        res.status(400).json({ message: 'video not fount' });
+        res.status(400).json({ message: 'incorrect payload' });
       } else {
-        res.status(200).json(findVideo.uri);
+        res.status(200);
       }
     }
   } catch (e) {
@@ -186,7 +186,7 @@ educationRoutes.delete(
           content.keynotes = content.keynotes.filter(value => {
             return value.hash !== findVideo.hash;
           });
-          res.status(200).json(content.keynotes);
+          res.status(204);
         }
       }
     } catch (e) {
