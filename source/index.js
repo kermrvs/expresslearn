@@ -1,13 +1,22 @@
-// Core
-import dg from 'debug';
-
-// Instruments
 import { app } from './server';
-import { getServerPort } from './helpers';
 
-const port = getServerPort();
-const debug = dg('server');
+import {
+  userRoutes,
+  classRoutes,
+  lessonsRoutes,
+  educationRoutes,
+} from './routers';
+import express from 'express';
+
+const port = 3000;
+
+app.use(express.json());
+
+app.use('/users', userRoutes);
+app.use('/classes', classRoutes);
+app.use('/lessons', lessonsRoutes);
+app.use('/education', educationRoutes);
 
 app.listen(port, () => {
-    debug(`Server is up on port ${port}`);
+  console.log(`Server API is up on port ${port}`);
 });
