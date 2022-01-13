@@ -4,11 +4,9 @@ import uuid4 from 'uuid4';
 
 export const userRoutes = express.Router();
 
-let users = [];
-
 userRoutes.get('/', (req, res) => {
   try {
-    res.status(200).json(users);
+    res.status(200).json({ daya: [] });
   } catch (e) {
     res.status(500).json({ message: 'some server error' });
   }
@@ -16,20 +14,7 @@ userRoutes.get('/', (req, res) => {
 
 userRoutes.post('/', (req, res) => {
   try {
-    const user = req.body;
-    const obj = users.filter(value => {
-      return value.name === user.name;
-    });
-    if (obj.length > 0) {
-      res.status(400).json({ message: 'incorrect payload' });
-    } else {
-      const date = new Date();
-      user.created = date;
-      user.updated = date;
-      user.hash = uuid4();
-      users.push(user);
-      res.status(201).json({ hash: user.hash });
-    }
+    res.status(201).json({ hash: '' });
   } catch (e) {
     res.status(500).json({ message: 'some server error' });
   }
@@ -37,13 +22,7 @@ userRoutes.post('/', (req, res) => {
 
 userRoutes.get('/:userHash', (req, res) => {
   try {
-    const { userHash } = req.params;
-    const user = getObByHash(userHash, users);
-    if (user != null) {
-      res.status(200).json(user);
-    } else {
-      res.status(400).json({ message: 'incorrect payload' });
-    }
+    res.status(200).json({ data: {} });
   } catch (e) {
     res.status(500).json({ message: 'some server error' });
   }
@@ -51,27 +30,7 @@ userRoutes.get('/:userHash', (req, res) => {
 
 userRoutes.put('/:userHash', (req, res) => {
   try {
-    const { userHash } = req.params;
-    const { name, email, phone, password, sex, roles } = req.body;
-    let user = getObByHash(userHash, users);
-    if (user != null) {
-      const date = new Date();
-      users.forEach(value => {
-        if (value.hash === user.hash) {
-          value.name = name;
-          value.email = email;
-          value.phone = phone;
-          value.password = password;
-          value.sex = sex;
-          value.roles = roles;
-          value.updated = date;
-          user = value;
-        }
-      });
-      res.status(200).json(user.hash);
-    } else {
-      res.status(400).json({ message: 'incorrect payload' });
-    }
+    res.status(200).json({ hash: '' });
   } catch (e) {
     res.status(500).json({ message: 'some server error' });
   }
@@ -79,17 +38,7 @@ userRoutes.put('/:userHash', (req, res) => {
 
 userRoutes.delete('/:userHash', (req, res) => {
   try {
-    const { userHash } = req.params;
-    const newUsers = users.filter(value => {
-      return value.hash !== userHash;
-    });
-
-    if (newUsers.length === users.length) {
-      res.status(400).json({ message: 'incorrect payload' });
-    } else {
-      users = newUsers;
-      res.status(204);
-    }
+    res.status(204);
   } catch (e) {
     res.status(500).json({ message: 'some server error' });
   }
