@@ -2,8 +2,8 @@ import express from 'express';
 import { getObByHash } from '../getObByHash';
 import uuid4 from 'uuid4';
 
-let classes = classesArray;
-let users = usersData;
+let classes = [];
+let users = [];
 
 export const educationRoutes = express.Router();
 

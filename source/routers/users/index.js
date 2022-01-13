@@ -1,6 +1,7 @@
 import express from 'express';
 import { getObByHash } from '../getObByHash';
 import uuid4 from 'uuid4';
+import { app } from '../../server';
 
 export const userRoutes = express.Router();
 
