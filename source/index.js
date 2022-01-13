@@ -1,6 +1,5 @@
 import { app } from './server';
 import { passMiddleware } from './routers';
-import { logger } from './util/logger';
 
 import {
   userRoutes,
@@ -9,21 +8,13 @@ import {
   educationRoutes,
 } from './routers';
 import express from 'express';
+import { myLogger } from './util/myLogger';
 
 const port = 3000;
 
 app.use(express.json());
 
-app.use((req, res, next) => {
-  if (process.env.NODE_ENV === 'development') {
-    const date = new Date();
-    const myFormat = `Method: ${
-      req.method
-    }, time: ${date}, payload: ${JSON.stringify(req.body)}`;
-    logger.log('info', myFormat);
-    next();
-  }
-});
+app.use(myLogger);
 
 app.use('/users', [passMiddleware], userRoutes);
 app.use('/classes', [passMiddleware], classRoutes);

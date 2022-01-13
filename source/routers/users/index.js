@@ -4,7 +4,7 @@ export const userRoutes = express.Router();
 
 userRoutes.get('/', (req, res) => {
   try {
-    res.status(200).json({ daya: [] });
+    res.status(200).json({ data: [] });
   } catch (e) {
     res.status(500).json({ message: 'some server error' });
   }
