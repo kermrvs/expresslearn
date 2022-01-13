@@ -28,7 +28,7 @@ classRoutes.post('/', (req, res) => {
       createdClass.updated = date;
       createdClass.hash = uuid4();
       classes.push(createdClass);
-      res.status(201).json(createdClass.hash);
+      res.status(201).json({ hash: createdClass.hash });
     }
   } catch (e) {
     res.status(500).json({ message: 'some server error' });

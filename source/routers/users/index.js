@@ -1,7 +1,6 @@
 import express from 'express';
 import { getObByHash } from '../getObByHash';
 import uuid4 from 'uuid4';
-import { app } from '../../server';
 
 export const userRoutes = express.Router();
 
@@ -29,7 +28,7 @@ userRoutes.post('/', (req, res) => {
       user.updated = date;
       user.hash = uuid4();
       users.push(user);
-      res.status(201).json(user.hash);
+      res.status(201).json({ hash: user.hash });
     }
   } catch (e) {
     res.status(500).json({ message: 'some server error' });

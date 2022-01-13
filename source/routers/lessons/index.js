@@ -22,7 +22,7 @@ lessonsRoutes.post('/', (req, res) => {
     lesson.modified = date;
     lesson.hash = uuid4();
     lessons.push(lesson);
-    res.status(201).json(lesson.hash);
+    res.status(201).json({ hash: lesson.hash });
   } catch (e) {
     res.status(500).json({ message: 'some server error' });
   }
