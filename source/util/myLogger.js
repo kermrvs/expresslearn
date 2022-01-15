@@ -1,4 +1,4 @@
-import { logger } from './loggerSettings';
+import { loggerDebug } from './loggerSettings';
 
 export const myLogger = (req, res, next) => {
   if (process.env.NODE_ENV === 'development') {
@@ -6,7 +6,7 @@ export const myLogger = (req, res, next) => {
     const myFormat = `Method: ${
       req.method
     }, time: ${date}, payload: ${JSON.stringify(req.body)}`;
-    logger.log('info', myFormat);
+    loggerDebug.log('info', myFormat);
     next();
   }
 };
