@@ -1,5 +1,5 @@
 import { app } from './server';
-import { passMiddleware } from './routers';
+import { passMiddleware } from './util';
 
 import {
   userRoutes,
@@ -8,13 +8,13 @@ import {
   educationRoutes,
 } from './routers';
 import express from 'express';
-import { myLogger } from './util/myLogger';
+import { myDebugLogger } from './util';
 
 const port = 3000;
 
 app.use(express.json());
 
-app.use(myLogger);
+app.use(myDebugLogger);
 
 app.use('/users', [passMiddleware], userRoutes);
 app.use('/classes', [passMiddleware], classRoutes);
