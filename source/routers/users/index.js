@@ -1,4 +1,5 @@
 import express from 'express';
+import { passMiddleware } from '../../util';
 
 export const userRoutes = express.Router();
 
@@ -10,7 +11,7 @@ userRoutes.get('/', (req, res) => {
   }
 });
 
-userRoutes.post('/', (req, res) => {
+userRoutes.post('/', passMiddleware, (req, res) => {
   try {
     res.status(201).json({ hash: '' });
   } catch (e) {
@@ -18,7 +19,7 @@ userRoutes.post('/', (req, res) => {
   }
 });
 
-userRoutes.get('/:userHash', (req, res) => {
+userRoutes.get('/:userHash', passMiddleware, (req, res) => {
   try {
     res.status(200).json({ data: {} });
   } catch (e) {
@@ -26,7 +27,7 @@ userRoutes.get('/:userHash', (req, res) => {
   }
 });
 
-userRoutes.put('/:userHash', (req, res) => {
+userRoutes.put('/:userHash', passMiddleware, (req, res) => {
   try {
     res.status(200).json({ hash: '' });
   } catch (e) {
@@ -34,7 +35,7 @@ userRoutes.put('/:userHash', (req, res) => {
   }
 });
 
-userRoutes.delete('/:userHash', (req, res) => {
+userRoutes.delete('/:userHash', passMiddleware, (req, res) => {
   try {
     res.status(204);
   } catch (e) {

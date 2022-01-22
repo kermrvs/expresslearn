@@ -1,4 +1,5 @@
 import express from 'express';
+import { passMiddleware } from '../../util';
 
 export const lessonsRoutes = express.Router();
 
@@ -10,7 +11,7 @@ lessonsRoutes.get('/', (req, res) => {
   }
 });
 
-lessonsRoutes.post('/', (req, res) => {
+lessonsRoutes.post('/', passMiddleware, (req, res) => {
   try {
     res.status(201).json({ hash: '' });
   } catch (e) {
@@ -18,7 +19,7 @@ lessonsRoutes.post('/', (req, res) => {
   }
 });
 
-lessonsRoutes.get('/:lessonHash', (req, res) => {
+lessonsRoutes.get('/:lessonHash', passMiddleware, (req, res) => {
   try {
     res.status(200).json({ data: {} });
   } catch (e) {
@@ -26,7 +27,7 @@ lessonsRoutes.get('/:lessonHash', (req, res) => {
   }
 });
 
-lessonsRoutes.put('/:lessonHash', (req, res) => {
+lessonsRoutes.put('/:lessonHash', passMiddleware, (req, res) => {
   try {
     res.status(200).json({ hash: '' });
   } catch (e) {
@@ -34,7 +35,7 @@ lessonsRoutes.put('/:lessonHash', (req, res) => {
   }
 });
 
-lessonsRoutes.delete('/:lessonHash', (req, res) => {
+lessonsRoutes.delete('/:lessonHash', passMiddleware, (req, res) => {
   try {
     res.status(204);
   } catch (e) {
