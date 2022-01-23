@@ -1,28 +1,19 @@
 import express from 'express';
-import { passMiddleware } from '../../util';
+import { authentication } from '../../util';
 import jwt from 'jsonwebtoken';
+import { loginHandler } from './loginHandler';
+import passport from 'passport';
 
 export const authRoutes = express.Router();
 
 authRoutes.post('/login', (req, res) => {
-  const body = req.get('authorization');
-  const [type, credentials] = body.split(' ');
-  const [email, password] = Buffer.from(credentials, 'base64')
-    .toString()
-    .split(':');
-  const obj = {
-    email,
-  };
-  req.session.user = obj;
-  const user = {
-    email,
-    password,
-  };
-  const token = jwt.sign(user, 'secret');
-  res.setHeader('x-token', token);
-  res.sendStatus(204);
+  loginHandler(req, res);
 });
 
-authRoutes.post('/logout', passMiddleware, (req, res) => {
+authRoutes.post('/github', passport.authenticate('github'), (req, res) => {
+  res.sendStatus(200);
+});
+
+authRoutes.post('/logout', authentication, (req, res) => {
   res.sendStatus(204);
 });

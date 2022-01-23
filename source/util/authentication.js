@@ -1,4 +1,4 @@
-export const passMiddleware = (req, res, next) => {
+export const authentication = (req, res, next) => {
   if (!req.session.user.email) {
     return res.sendStatus(401);
   }

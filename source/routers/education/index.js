@@ -1,11 +1,11 @@
 import express from 'express';
-import { passMiddleware } from '../../util';
+import { authentication } from '../../util';
 
 export const educationRoutes = express.Router();
 
 educationRoutes.post(
   '/classes/:classHash/enroll',
-  passMiddleware,
+  authentication,
   (req, res) => {
     try {
       res.sendStatus(204);
@@ -17,7 +17,7 @@ educationRoutes.post(
 
 educationRoutes.post(
   '/classes/:classHash/expel',
-  passMiddleware,
+  authentication,
   (req, res) => {
     try {
       res.sendStatus(204);
@@ -29,7 +29,7 @@ educationRoutes.post(
 
 educationRoutes.post(
   '/lessons/:lessonHash/videos',
-  passMiddleware,
+  authentication,
   (req, res) => {
     try {
       res.sendStatus(204);
@@ -41,7 +41,7 @@ educationRoutes.post(
 
 educationRoutes.post(
   '/lessons/:lessonHash/keynotes',
-  passMiddleware,
+  authentication,
   (req, res) => {
     try {
       res.sendStatus(204);
@@ -53,7 +53,7 @@ educationRoutes.post(
 
 educationRoutes.get(
   '/lessons/:lessonHash/videos/:videoHash',
-  passMiddleware,
+  authentication,
   (req, res) => {
     try {
       res.status(200);
@@ -65,7 +65,7 @@ educationRoutes.get(
 
 educationRoutes.delete(
   '/lessons/:lessonHash/videos/:videoHash',
-  passMiddleware,
+  authentication,
   (req, res) => {
     try {
       res.status(204);
@@ -77,7 +77,7 @@ educationRoutes.delete(
 
 educationRoutes.get(
   '/lessons/:lessonHash/keynote/:keynoteHash',
-  passMiddleware,
+  authentication,
   (req, res) => {
     try {
       res.status(200);
@@ -89,7 +89,7 @@ educationRoutes.get(
 
 educationRoutes.delete(
   '/lessons/:lessonHash/keynote/:keynoteHash',
-  passMiddleware,
+  authentication,
   (req, res) => {
     try {
       res.status(204);

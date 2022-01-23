@@ -1,5 +1,5 @@
 import express from 'express';
-import { passMiddleware } from '../../util';
+import { authentication } from '../../util';
 
 export const classRoutes = express.Router();
 
@@ -11,7 +11,7 @@ classRoutes.get('/', (req, res) => {
   }
 });
 
-classRoutes.post('/', passMiddleware, (req, res) => {
+classRoutes.post('/', authentication, (req, res) => {
   try {
     res.status(201).json({ hash: '' });
   } catch (e) {
@@ -19,7 +19,7 @@ classRoutes.post('/', passMiddleware, (req, res) => {
   }
 });
 
-classRoutes.get('/:classHash', passMiddleware, (req, res) => {
+classRoutes.get('/:classHash', authentication, (req, res) => {
   try {
     res.status(200).json({ data: {} });
   } catch (e) {
@@ -27,7 +27,7 @@ classRoutes.get('/:classHash', passMiddleware, (req, res) => {
   }
 });
 
-classRoutes.put('/:classHash', passMiddleware, (req, res) => {
+classRoutes.put('/:classHash', authentication, (req, res) => {
   try {
     res.status(200).json({ hash: '' });
   } catch (e) {
@@ -35,7 +35,7 @@ classRoutes.put('/:classHash', passMiddleware, (req, res) => {
   }
 });
 
-classRoutes.delete('/:classHash', passMiddleware, (req, res) => {
+classRoutes.delete('/:classHash', authentication, (req, res) => {
   try {
     res.status(204);
   } catch (e) {
